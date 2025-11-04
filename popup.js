@@ -9,12 +9,14 @@
   const statusMessage = document.getElementById('status-message');
 
   // Load saved duration
-  chrome.storage.sync.get(['timerDuration'], function(result) {
-    if (result.timerDuration) {
-      durationInput.value = result.timerDuration;
-      updateActivePreset(result.timerDuration);
-    }
-  });
+  if (typeof chrome !== 'undefined' && chrome.storage) {
+    chrome.storage.sync.get(['timerDuration'], function(result) {
+      if (result.timerDuration) {
+        durationInput.value = result.timerDuration;
+        updateActivePreset(result.timerDuration);
+      }
+    });
+  }
 
   // Preset button handlers
   presetButtons.forEach(btn => {
@@ -48,6 +50,12 @@
     // Validate duration
     if (!duration || duration < 1 || duration > 60) {
       showStatus('Voer een geldige duur in (1-60 minuten)', 'error');
+      return;
+    }
+
+    // Check if chrome API is available
+    if (typeof chrome === 'undefined' || !chrome.storage) {
+      showStatus('Chrome extensie API niet beschikbaar', 'error');
       return;
     }
 

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Leren Timer",
   "version": "1.0.0",
-  "description": "Een 8-minuten timer overlay voor studygo.com, jojoschool.nl en quizlet.com",
+  "description": "Een instelbare timer overlay voor studygo.com, jojoschool.nl en quizlet.com",
   "permissions": [
     "activeTab",
     "storage"

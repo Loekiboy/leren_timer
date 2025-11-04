@@ -81,13 +81,15 @@
   let isPaused = false;
 
   // Load custom duration from storage
-  chrome.storage.sync.get(['timerDuration'], function(result) {
-    if (result.timerDuration) {
-      defaultDuration = result.timerDuration * 60; // Convert minutes to seconds
-      timeRemaining = defaultDuration;
-      updateDisplay();
-    }
-  });
+  if (typeof chrome !== 'undefined' && chrome.storage) {
+    chrome.storage.sync.get(['timerDuration'], function(result) {
+      if (result.timerDuration) {
+        defaultDuration = result.timerDuration * 60; // Convert minutes to seconds
+        timeRemaining = defaultDuration;
+        updateDisplay();
+      }
+    });
+  }
 
   // Get DOM elements
   const timerDisplay = document.getElementById('timer-display');
@@ -296,11 +298,13 @@
   }, 100);
 
   // Listen for duration updates from popup
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.action === 'updateDuration') {
-      defaultDuration = request.duration * 60; // Convert minutes to seconds
-      resetTimer();
-      sendResponse({success: true});
-    }
-  });
+  if (typeof chrome !== 'undefined' && chrome.runtime) {
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+      if (request.action === 'updateDuration') {
+        defaultDuration = request.duration * 60; // Convert minutes to seconds
+        resetTimer();
+        sendResponse({success: true});
+      }
+    });
+  }
 })();
