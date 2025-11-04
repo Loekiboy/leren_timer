@@ -74,10 +74,20 @@
   document.body.appendChild(overlay);
 
   // Timer state
-  let timeRemaining = 480; // 8 minutes in seconds
+  let defaultDuration = 480; // 8 minutes in seconds (default)
+  let timeRemaining = defaultDuration;
   let timerInterval = null;
   let isRunning = false;
   let isPaused = false;
+
+  // Load custom duration from storage
+  chrome.storage.sync.get(['timerDuration'], function(result) {
+    if (result.timerDuration) {
+      defaultDuration = result.timerDuration * 60; // Convert minutes to seconds
+      timeRemaining = defaultDuration;
+      updateDisplay();
+    }
+  });
 
   // Get DOM elements
   const timerDisplay = document.getElementById('timer-display');
@@ -104,7 +114,7 @@
 
   // Update progress circle
   function updateProgress() {
-    const progress = timeRemaining / 480;
+    const progress = timeRemaining / defaultDuration;
     const offset = circumference - (progress * circumference);
     progressCircle.style.strokeDashoffset = offset;
   }
@@ -202,11 +212,11 @@
   // Reset timer
   function resetTimer() {
     stopTimer();
-    timeRemaining = 480;
+    timeRemaining = defaultDuration;
     updateDisplay();
     container.classList.remove('timer-complete', 'timer-warning');
     timerDisplay.classList.remove('pulse-animation');
-    timerDisplayTime.textContent = '8:00';
+    timerDisplayTime.textContent = formatTime(defaultDuration);
     timerDisplay.querySelector('.timer-label').textContent = 'minuten';
     
     // Remove any remaining confetti
@@ -284,4 +294,13 @@
   setTimeout(() => {
     overlay.classList.add('timer-visible');
   }, 100);
+
+  // Listen for duration updates from popup
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.action === 'updateDuration') {
+      defaultDuration = request.duration * 60; // Convert minutes to seconds
+      resetTimer();
+      sendResponse({success: true});
+    }
+  });
 })();

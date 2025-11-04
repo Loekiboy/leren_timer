@@ -1,0 +1,88 @@
+// Popup Script
+(function() {
+  'use strict';
+
+  // Get DOM elements
+  const durationInput = document.getElementById('duration-input');
+  const presetButtons = document.querySelectorAll('.preset-btn');
+  const saveBtn = document.getElementById('save-btn');
+  const statusMessage = document.getElementById('status-message');
+
+  // Load saved duration
+  chrome.storage.sync.get(['timerDuration'], function(result) {
+    if (result.timerDuration) {
+      durationInput.value = result.timerDuration;
+      updateActivePreset(result.timerDuration);
+    }
+  });
+
+  // Preset button handlers
+  presetButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const minutes = parseInt(this.dataset.minutes);
+      durationInput.value = minutes;
+      updateActivePreset(minutes);
+    });
+  });
+
+  // Update active preset button
+  function updateActivePreset(minutes) {
+    presetButtons.forEach(btn => {
+      if (parseInt(btn.dataset.minutes) === minutes) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Update active state when input changes
+  durationInput.addEventListener('input', function() {
+    updateActivePreset(parseInt(this.value));
+  });
+
+  // Save button handler
+  saveBtn.addEventListener('click', function() {
+    const duration = parseInt(durationInput.value);
+    
+    // Validate duration
+    if (!duration || duration < 1 || duration > 60) {
+      showStatus('Voer een geldige duur in (1-60 minuten)', 'error');
+      return;
+    }
+
+    // Save to storage
+    chrome.storage.sync.set({ timerDuration: duration }, function() {
+      showStatus('✓ Instellingen opgeslagen!', 'success');
+      
+      // Notify content script about the change
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        if (tabs[0]) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            action: 'updateDuration',
+            duration: duration
+          }).catch(() => {
+            // Ignore errors if content script is not loaded
+          });
+        }
+      });
+    });
+  });
+
+  // Show status message
+  function showStatus(message, type) {
+    statusMessage.textContent = message;
+    statusMessage.className = 'status-message show ' + type;
+    
+    setTimeout(() => {
+      statusMessage.classList.remove('show');
+    }, 3000);
+  }
+
+  // Handle Enter key in input
+  durationInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      saveBtn.click();
+    }
+  });
+})();
