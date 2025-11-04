@@ -10,7 +10,7 @@
     {
       "matches": [
         "*://*.studygo.com/*",
-        "*://*.jojoschool.nl/*",
+        "*://leren.jojoschool.nl/*",
         "*://*.quizlet.com/*"
       ],
       "js": ["content.js"],
