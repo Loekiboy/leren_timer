@@ -22,6 +22,12 @@
         <div class="timer-display-wrapper">
           <div class="timer-circle-container">
             <svg class="timer-progress-ring" width="200" height="200">
+              <defs>
+                <linearGradient id="leren-timer-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                </linearGradient>
+              </defs>
               <circle
                 class="timer-progress-ring-circle-bg"
                 stroke="#e0e0e0"
@@ -33,19 +39,13 @@
               />
               <circle
                 class="timer-progress-ring-circle"
-                stroke="url(#gradient)"
+                stroke="url(#leren-timer-gradient)"
                 stroke-width="8"
                 fill="transparent"
                 r="90"
                 cx="100"
                 cy="100"
               />
-              <defs>
-                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
-                </linearGradient>
-              </defs>
             </svg>
             <div class="timer-display" id="timer-display">
               <span class="timer-time">8:00</span>
@@ -130,9 +130,6 @@
       timerDisplayTime.textContent = 'Klaar!';
       timerDisplay.querySelector('.timer-label').textContent = 'Goed gedaan! 🎉';
     }, 500);
-
-    // Play sound (optional - commented out as it might be annoying)
-    // playCompletionSound();
   }
 
   // Create confetti animation

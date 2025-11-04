@@ -294,7 +294,7 @@
 }
 
 /* Add warning gradient */
-svg defs {
+.timer-progress-ring defs {
   position: absolute;
 }
 
