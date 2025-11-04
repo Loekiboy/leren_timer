@@ -1,5 +1,5 @@
 // Leren Timer - Content Script
-// This script creates a beautiful 8-minute timer overlay
+// This script creates a beautiful timer overlay with configurable duration
 
 (function() {
   'use strict';

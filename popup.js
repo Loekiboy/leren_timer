@@ -2,6 +2,12 @@
 (function() {
   'use strict';
 
+  // Constants
+  const ERROR_MESSAGES = {
+    INVALID_DURATION: 'Voer een geldige duur in (1-60 minuten)',
+    CHROME_API_UNAVAILABLE: 'Chrome extensie API niet beschikbaar'
+  };
+
   // Get DOM elements
   const durationInput = document.getElementById('duration-input');
   const presetButtons = document.querySelectorAll('.preset-btn');
@@ -49,13 +55,13 @@
     
     // Validate duration
     if (!duration || duration < 1 || duration > 60) {
-      showStatus('Voer een geldige duur in (1-60 minuten)', 'error');
+      showStatus(ERROR_MESSAGES.INVALID_DURATION, 'error');
       return;
     }
 
     // Check if chrome API is available
     if (typeof chrome === 'undefined' || !chrome.storage) {
-      showStatus('Chrome extensie API niet beschikbaar', 'error');
+      showStatus(ERROR_MESSAGES.CHROME_API_UNAVAILABLE, 'error');
       return;
     }
 
@@ -70,7 +76,7 @@
             action: 'updateDuration',
             duration: duration
           }).catch(() => {
-            // Ignore errors if content script is not loaded
+            // Content script not available - this is normal if user is not on a supported website
           });
         }
       });
