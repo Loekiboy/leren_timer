@@ -1,14 +1,17 @@
 # Leren Timer 🕐
 
-Een prachtige 8-minuten timer extensie voor studygo.com, jojoschool.nl en quizlet.com. Deze browser extensie voegt een elegante, geanimeerde timer overlay toe aan je favoriete leersites.
+Een prachtige timer extensie voor studygo.com, jojoschool.nl en quizlet.com. Deze browser extensie voegt een elegante, geanimeerde timer overlay toe aan je favoriete leersites met instelbare tijdsduur.
 
 ## ✨ Features
 
-- ⏱️ **8-minuten countdown timer** - Perfect voor geconcentreerd leren
+- ⏱️ **Instelbare timer** - Stel de duur in van 1 tot 60 minuten
+- 🎛️ **Popup interface** - Eenvoudig de timer instellen via de extensie popup
+- 🔗 **GitHub link** - Directe link naar de broncode
 - 🎨 **Mooie animaties** - Vloeiende overgangen en visuele feedback
 - 🎉 **Voltooiingsviering** - Confetti effect wanneer de timer afloopt
 - 🔔 **Visuele waarschuwingen** - Duidelijke indicatie in de laatste minuut
 - 📌 **Versleepbaar** - Plaats de timer waar je wilt
+- 🔽 **Minimaliseerbaar** - Minimaliseer de timer naar een klein icoon in de hoek
 - 💾 **Pauzeer & Hervat** - Volledige controle over je timer
 - 🎯 **Naadloze integratie** - Past perfect bij de websites
 
@@ -33,22 +36,27 @@ Een prachtige 8-minuten timer extensie voor studygo.com, jojoschool.nl en quizle
 
 ## 📖 Gebruik
 
-1. Bezoek een van de ondersteunde websites:
-   - studygo.com
-   - jojoschool.nl
-   - quizlet.com
+1. **Installeer de extensie** (zie instructies hieronder)
 
-2. De timer verschijnt automatisch in de rechterbovenhoek
+2. **Stel de timer in:**
+   - Klik op het Leren Timer icoon in je browser toolbar
+   - Stel de gewenste duur in (1-60 minuten)
+   - Kies een snelkoppeling (5, 8, 15, of 25 minuten) of voer een aangepaste waarde in
+   - Klik op "Opslaan"
 
-3. **Bedieningsknoppen:**
-   - ▶ **Start** - Begin de 8-minuten countdown
+3. **Gebruik de timer op een ondersteunde website:**
+   - Bezoek studygo.com, jojoschool.nl, of quizlet.com
+   - De timer verschijnt automatisch in de rechterbovenhoek
+
+4. **Bedieningsknoppen:**
+   - ▶ **Start** - Begin de countdown
    - ⏸ **Pauze** - Pauzeer de timer
-   - ↻ **Reset** - Zet de timer terug naar 8:00
-   - × **Minimaliseren** - Maak de timer kleiner
+   - ↻ **Reset** - Zet de timer terug naar de ingestelde duur
+   - × **Minimaliseren** - Maak de timer kleiner (klik opnieuw om te maximaliseren)
 
-4. **Versleepbaar:** Klik en sleep de timer header om de positie aan te passen
+5. **Versleepbaar:** Klik en sleep de timer header om de positie aan te passen
 
-5. **Voltooiing:** Wanneer de timer afloopt, zie je een prachtige confetti animatie! 🎊
+6. **Voltooiing:** Wanneer de timer afloopt, zie je een prachtige confetti animatie! 🎊
 
 ## 🎨 Design
 
@@ -68,6 +76,9 @@ leren_timer/
 ├── manifest.json          # Extension configuratie
 ├── content.js            # Hoofd timer logica
 ├── timer.css            # Styling en animaties
+├── popup.html           # Popup interface HTML
+├── popup.css            # Popup styling
+├── popup.js             # Popup logica
 ├── icons/               # Extension iconen
 │   ├── icon16.png
 │   ├── icon48.png
@@ -108,10 +119,13 @@ Bijdragen zijn welkom! Voel je vrij om issues te openen of pull requests in te d
 
 ## 💡 Tips
 
-- Gebruik de timer voor geconcentreerde leersessies
+- Gebruik de popup om je favoriete tijdsduur in te stellen
+- De timer onthoudt je instellingen voor de volgende keer
+- Gebruik presets voor veelgebruikte tijden (Pomodoro: 25 min)
 - De laatste minuut krijgt een rode waarschuwing
 - De timer blijft zichtbaar terwijl je door de website navigeert
 - Minimaliseer de timer om meer schermruimte te krijgen
+- Klik op "Bekijk code op GitHub" in de popup voor de broncode
 
 ---
 
