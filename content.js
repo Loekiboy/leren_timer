@@ -254,8 +254,8 @@
   
   // Click on minimized timer to restore it
   overlay.addEventListener('click', function(e) {
-    // Don't restore if clicking on a button
-    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+    // Don't restore if clicking on a button or its children
+    if (e.target.matches('button, button *')) {
       return;
     }
     
