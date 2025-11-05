@@ -52,7 +52,7 @@ Een prachtige timer extensie voor studygo.com, jojoschool.nl en quizlet.com. Dez
    - ▶ **Start** - Begin de countdown
    - ⏸ **Pauze** - Pauzeer de timer
    - ↻ **Reset** - Zet de timer terug naar de ingestelde duur
-   - × **Minimaliseren** - Maak de timer kleiner (klik opnieuw om te maximaliseren)
+   - × **Minimaliseren** - Maak de timer kleiner. Klik op de kleine tijdsweergave rechtsonder om weer te maximaliseren.
 
 5. **Versleepbaar:** Klik en sleep de timer header om de positie aan te passen
 
@@ -125,6 +125,7 @@ Bijdragen zijn welkom! Voel je vrij om issues te openen of pull requests in te d
 - De laatste minuut krijgt een rode waarschuwing
 - De timer blijft zichtbaar terwijl je door de website navigeert
 - Minimaliseer de timer om meer schermruimte te krijgen
+- In geminimaliseerde modus kun je op de kleine tijdsweergave (rechtsonder) klikken om hem terug te brengen
 - Klik op "Bekijk code op GitHub" in de popup voor de broncode
 
 ---

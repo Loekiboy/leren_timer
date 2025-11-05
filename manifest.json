@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Leren Timer",
-  "version": "1.0.0",
+  "version": "0.1.5",
   "description": "Een instelbare timer overlay voor studygo.com, jojoschool.nl en quizlet.com",
   "permissions": [
     "activeTab",
@@ -20,13 +20,16 @@
     {
       "matches": [
         "*://*.studygo.com/*",
-        "*://leren.jojoschool.nl/*",
+        "https://leren.jojoschool.nl/*",
         "*://*.quizlet.com/*"
       ],
       "js": ["content.js"],
       "css": ["timer.css"]
     }
   ],
+  "side_panel": {
+    "default_path": "popup.html"
+  },
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

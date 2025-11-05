@@ -12,6 +12,7 @@
   const durationInput = document.getElementById('duration-input');
   const presetButtons = document.querySelectorAll('.preset-btn');
   const saveBtn = document.getElementById('save-btn');
+  const showBtn = document.getElementById('show-btn');
   const statusMessage = document.getElementById('status-message');
 
   // Load saved duration
@@ -72,16 +73,42 @@
       // Notify content script about the change
       chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         if (tabs[0]) {
-          chrome.tabs.sendMessage(tabs[0].id, {
-            action: 'updateDuration',
-            duration: duration
-          }).catch(() => {
-            // Content script not available - this is normal if user is not on a supported website
-          });
+          try {
+            chrome.tabs.sendMessage(
+              tabs[0].id,
+              { action: 'updateDuration', duration: duration },
+              function() {
+                // Swallow errors if no content script on this page
+                void chrome.runtime?.lastError;
+              }
+            );
+          } catch (e) {
+            // Ignore; not a supported page or messaging unavailable
+          }
         }
       });
     });
   });
+
+  // Show overlay button handler
+  if (showBtn) {
+    showBtn.addEventListener('click', function() {
+      if (typeof chrome === 'undefined' || !chrome.tabs) return;
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        if (tabs[0]) {
+          try {
+            chrome.tabs.sendMessage(
+              tabs[0].id,
+              { action: 'showOverlay' },
+              function() { void chrome.runtime?.lastError; }
+            );
+          } catch (e) {
+            // ignore
+          }
+        }
+      });
+    });
+  }
 
   // Show status message
   function showStatus(message, type) {

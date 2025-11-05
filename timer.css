@@ -18,20 +18,61 @@
   transform: translateY(0);
 }
 
+#leren-timer-overlay.minimized {
+  top: auto !important;
+  right: 12px !important;
+  bottom: 12px !important;
+  left: auto !important;
+}
+
 #leren-timer-overlay.minimized .leren-timer-container {
-  transform: scale(0.3) translateX(150px) translateY(-100px);
-  opacity: 0.5;
+  transform: none !important;
+  opacity: 1 !important;
 }
 
-#leren-timer-overlay.minimized:hover .leren-timer-container {
-  transform: scale(0.4) translateX(150px) translateY(-100px);
-  opacity: 0.7;
+#leren-timer-overlay.minimized .timer-card {
+  padding: 6px 10px !important;
+  min-width: unset !important;
+  border-radius: 999px !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25) !important;
 }
 
-.leren-timer-container {
-  position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-  cursor: default;
+/* Hide everything except the time */
+#leren-timer-overlay.minimized .timer-header,
+#leren-timer-overlay.minimized .timer-controls,
+#leren-timer-overlay.minimized .timer-label,
+#leren-timer-overlay.minimized .timer-progress-ring,
+#leren-timer-overlay.minimized .timer-progress-ring-circle {
+  display: none !important;
+}
+
+#leren-timer-overlay.minimized .timer-display-wrapper {
+  margin: 0 !important;
+  display: block !important;
+}
+
+#leren-timer-overlay.minimized .timer-circle-container {
+  width: auto !important;
+  height: auto !important;
+  position: static !important;
+}
+
+#leren-timer-overlay.minimized .timer-display {
+  position: static !important;
+  transform: none !important;
+}
+
+#leren-timer-overlay.minimized .timer-time {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: #fff !important;
+  line-height: 1 !important;
 }
 
 .timer-card {
@@ -441,4 +482,35 @@
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
   }
+}
+
+/* Minimize button inside overlay (top-right corner of the overlay) */
+.lt-minimize-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.1);
+  color: inherit;
+  font: 700 16px/24px system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.lt-minimize-btn:hover {
+  background: rgba(0,0,0,0.18);
+}
+.lt-minimize-btn:active {
+  transform: translateY(1px);
+}
+
+/* Ensure overlay can host absolute button; if already positioned, this is harmless */
+[data-lt-overlay],
+.leren-timer,
+.lt-overlay {
+  position: relative;
 }
