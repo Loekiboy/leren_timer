@@ -229,64 +229,14 @@
     document.querySelectorAll('.confetti').forEach(c => c.remove());
   }
 
-  // Close/minimize timer
-  function closeTimer() {
-    overlay.classList.toggle('minimized');
-  }
-  
-  // Restore from minimized when clicking the minimized pill
-  overlay.addEventListener('click', function(e) {
-    if (overlay.classList.contains('minimized')) {
-      e.preventDefault();
-      e.stopPropagation();
-      overlay.classList.remove('minimized');
-      ltMinimized = false;
-    }
-  }, true);
-
   // === Minimize support (no persistence, no separate mini element) ===
   let ltMinimized = false;
   let ltMiniEl = null;
 
-  /**
-   * Call this once after your overlay element exists.
-   * overlayEl: the root DOM element of your timer overlay (e.g. #leren-timer-overlay)
-   */
-  function injectMinimizeUI(overlayEl) {
-    if (!overlayEl || overlayEl.__ltMiniInjected) return;
-    overlayEl.__ltMiniInjected = true;
-
-    // Ensure we start expanded on every page load
-    ltMinimized = false;
-    applyMinState(overlayEl);
-
-    // Add a minimize button if you don't already have one
-    // (If you already render one, just bind the click to toggleMinimize)
-    let btn = overlayEl.querySelector('.lt-minimize-btn');
-    if (!btn) {
-      btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'lt-minimize-btn';
-      btn.title = 'Minimaliseren';
-      btn.textContent = '–';
-      overlayEl.appendChild(btn);
-    }
-
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleMinimize(overlayEl);
-    });
-  }
-
-  function toggleMinimize(overlayEl) {
+  // Close/minimize timer
+  function closeTimer() {
     ltMinimized = !ltMinimized;
-    applyMinState(overlayEl);
-  }
-
-  function applyMinState(overlayEl) {
-    if (!overlayEl) return;
-    // Only toggle a CSS class. Do NOT hide the overlay.
-    overlayEl.classList.toggle('minimized', ltMinimized);
+    overlay.classList.toggle('minimized', ltMinimized);
   }
 
   /**
@@ -301,6 +251,21 @@
   pauseBtn.addEventListener('click', pauseTimer);
   resetBtn.addEventListener('click', resetTimer);
   closeBtn.addEventListener('click', closeTimer);
+  
+  // Click on minimized timer to restore it
+  overlay.addEventListener('click', function(e) {
+    // Don't restore if clicking on a button or its children
+    if (e.target.matches('button, button *')) {
+      return;
+    }
+    
+    if (overlay.classList.contains('minimized')) {
+      e.preventDefault();
+      e.stopPropagation();
+      ltMinimized = false;
+      overlay.classList.remove('minimized');
+    }
+  });
 
   // Make timer draggable
   let isDragging = false;
@@ -362,12 +327,6 @@
   setTimeout(() => {
     overlay.classList.add('timer-visible');
   }, 100);
-
-  // After creating your overlay root element:
-  {
-    // const overlayEl = document.getElementById('leren-timer-overlay');
-    // injectMinimizeUI(overlayEl);
-  }
 
   // Listen for duration updates from popup
   if (typeof chrome !== 'undefined' && chrome.runtime) {
